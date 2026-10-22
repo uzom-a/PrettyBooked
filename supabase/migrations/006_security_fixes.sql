@@ -175,3 +175,28 @@ drop trigger if exists guard_notification_changes on public.notifications;
 create trigger guard_notification_changes
   before update on public.notifications
   for each row execute function public.guard_notification_changes();
+
+-- ───────────────────────────────────────────
+-- 5. Photo uploads: your own folder, pictures only, 5 MB max
+-- ───────────────────────────────────────────
+
+update storage.buckets
+set file_size_limit = 5242880,
+    allowed_mime_types = array['image/jpeg', 'image/png', 'image/webp', 'image/heic']
+where id in ('avatars', 'portfolio');
+
+-- Profile photos are saved as avatars/<your id>.<ext>
+drop policy if exists "Avatar uploads" on storage.objects;
+create policy "Avatar uploads" on storage.objects for insert with check (
+  bucket_id = 'avatars' and name like 'avatars/' || auth.uid()::text || '.%'
+);
+drop policy if exists "Avatar replacements" on storage.objects;
+create policy "Avatar replacements" on storage.objects for update using (
+  bucket_id = 'avatars' and name like 'avatars/' || auth.uid()::text || '.%'
+);
+
+-- Portfolio photos are saved under portfolio/<your id>/
+drop policy if exists "Portfolio uploads" on storage.objects;
+create policy "Portfolio uploads" on storage.objects for insert with check (
+  bucket_id = 'portfolio' and name like 'portfolio/' || auth.uid()::text || '/%'
+);
