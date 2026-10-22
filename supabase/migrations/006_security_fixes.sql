@@ -61,3 +61,37 @@ create trigger guard_profile_changes
 -- Your own email still comes from your login.
 revoke select on public.profiles from anon, authenticated;
 grant select (id, full_name, role, created_at) on public.profiles to anon, authenticated;
+
+-- ───────────────────────────────────────────
+-- 3. Reviews: only after a completed booking
+-- ───────────────────────────────────────────
+
+-- A student can only review a stylist they had a completed booking with.
+drop policy if exists "Students write own reviews" on public.reviews;
+create policy "Students write own reviews" on public.reviews for insert with check (
+  auth.uid() = student_id
+  and exists (
+    select 1 from public.bookings b
+    where b.id = booking_id
+      and b.student_id = auth.uid()
+      and b.provider_id = reviews.provider_id
+      and b.status = 'completed'
+  )
+);
+
+-- One review per booking. Skipped if old data already has doubles.
+do $$
+begin
+  if not exists (
+    select booking_id from public.reviews
+    where booking_id is not null
+    group by booking_id having count(*) > 1
+  ) then
+    create unique index if not exists reviews_one_per_booking on public.reviews (booking_id);
+  end if;
+end $$;
+
+-- Keep review comments a sensible length.
+alter table public.reviews drop constraint if exists reviews_comment_length;
+alter table public.reviews add constraint reviews_comment_length
+  check (comment is null or char_length(comment) <= 1000) not valid;
