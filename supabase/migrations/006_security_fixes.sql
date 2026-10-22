@@ -52,3 +52,12 @@ drop trigger if exists guard_profile_changes on public.profiles;
 create trigger guard_profile_changes
   before insert or update on public.profiles
   for each row execute function public.guard_profile_changes();
+
+-- ───────────────────────────────────────────
+-- 2. Emails: nobody can read other people's email
+-- ───────────────────────────────────────────
+
+-- The app can read every profile column except email.
+-- Your own email still comes from your login.
+revoke select on public.profiles from anon, authenticated;
+grant select (id, full_name, role, created_at) on public.profiles to anon, authenticated;
