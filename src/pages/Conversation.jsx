@@ -15,7 +15,7 @@ export default function Conversation() {
   useEffect(() => {
     async function load() {
       const [{ data: other }, { data: msgs }] = await Promise.all([
-        supabase.from('profiles').select('*').eq('id', otherId).single(),
+        supabase.from('profiles').select('id, full_name, role').eq('id', otherId).single(),
         supabase
           .from('messages')
           .select('*')

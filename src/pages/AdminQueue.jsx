@@ -17,7 +17,7 @@ export default function AdminQueue() {
     async function load() {
       const { data } = await supabase
         .from('provider_profiles')
-        .select('*, profiles(full_name, email)')
+        .select('*, profiles(full_name)')
         .eq('is_approved', false)
         .order('created_at', { ascending: true })
       setPending(data || [])
@@ -63,7 +63,6 @@ export default function AdminQueue() {
               )}
               <div className="flex-1">
                 <p className="font-semibold text-gray-900">{p.profiles?.full_name}</p>
-                <p className="text-sm text-gray-500">{p.profiles?.email}</p>
                 <span className="inline-block mt-1 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full capitalize">
                   {p.category.replace('-', ' ')}
                 </span>
