@@ -68,7 +68,7 @@ export default function NotificationBell({ profile }) {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl border border-blush-100 shadow-lg z-50 overflow-hidden">
+        <div className="fixed inset-x-4 top-16 md:absolute md:inset-x-auto md:top-auto md:right-0 md:mt-2 md:w-80 bg-white rounded-2xl border border-blush-100 shadow-lg z-50 overflow-hidden">
           <div className="flex items-center justify-between px-4 py-3 border-b border-blush-100">
             <p className="font-semibold text-gray-800 text-sm">Notifications</p>
             {unreadCount > 0 && (
