@@ -10,7 +10,6 @@ const CATEGORIES = [
 export default function Landing() {
   return (
     <div>
-      {/* Hero */}
       <section className="bg-gradient-to-br from-blush-50 via-white to-mauve-100 py-24 px-6 text-center">
         <p className="text-blush-500 font-medium tracking-widest uppercase text-sm mb-4">
           For the ladies of Grambling State
@@ -30,7 +29,6 @@ export default function Landing() {
         </Link>
       </section>
 
-      {/* Categories */}
       <section className="max-w-5xl mx-auto px-6 py-20">
         <h2 className="font-heading text-3xl font-bold text-center text-blush-700 mb-12">
           Browse by category
@@ -52,7 +50,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Footer tagline */}
       <section className="bg-blush-50 border-t border-blush-100 py-10 text-center">
         <p className="font-heading text-xl text-blush-600 font-semibold">PrettyBooked</p>
         <p className="text-sm text-gray-400 mt-1">Made for GSU ladies, by GSU ladies</p>

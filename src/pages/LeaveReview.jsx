@@ -43,7 +43,6 @@ export default function LeaveReview() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Star rating */}
           <div className="text-center">
             <label className="block text-sm font-medium text-gray-700 mb-3">Your rating</label>
             <div className="flex justify-center gap-2">
@@ -68,7 +67,6 @@ export default function LeaveReview() {
             )}
           </div>
 
-          {/* Comment */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Comment <span className="text-gray-400 font-normal">(optional)</span>

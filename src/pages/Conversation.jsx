@@ -83,7 +83,6 @@ export default function Conversation() {
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-8 flex flex-col h-[calc(100vh-72px)]">
-      {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <Link to="/messages" className="text-gray-400 hover:text-gray-600 text-sm">← Back</Link>
         <div className="w-10 h-10 rounded-full bg-blush-200 flex items-center justify-center text-blush-600 font-bold">
@@ -92,7 +91,6 @@ export default function Conversation() {
         <p className="font-semibold text-gray-900">{otherUser?.full_name}</p>
       </div>
 
-      {/* Messages */}
       <div className="flex-1 overflow-y-auto space-y-3 mb-4">
         {messages.length === 0 && (
           <p className="text-center text-gray-400 text-sm py-8">
@@ -116,7 +114,6 @@ export default function Conversation() {
         <div ref={bottomRef} />
       </div>
 
-      {/* Input */}
       <form onSubmit={handleSend} className="flex gap-3">
         <input
           value={text}

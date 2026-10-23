@@ -35,7 +35,6 @@ export default function ProviderProfile() {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-12">
-      {/* Header */}
       <div className="bg-white rounded-3xl shadow-sm border border-blush-100 p-8 mb-6 flex gap-6 items-start">
         {provider.avatar_url ? (
           <img src={provider.avatar_url} alt={provider.profiles?.full_name} className="w-24 h-24 rounded-full object-cover flex-shrink-0" />
@@ -56,7 +55,6 @@ export default function ProviderProfile() {
         </div>
       </div>
 
-      {/* Portfolio */}
       {provider.portfolio_urls?.length > 0 && (
         <div className="mb-6">
           <h2 className="font-heading text-xl font-semibold text-gray-800 mb-3">Portfolio</h2>
@@ -68,7 +66,6 @@ export default function ProviderProfile() {
         </div>
       )}
 
-      {/* Services */}
       <div className="mb-6">
         <h2 className="font-heading text-xl font-semibold text-gray-800 mb-3">Services</h2>
         {services.length === 0 ? (
@@ -88,7 +85,6 @@ export default function ProviderProfile() {
         )}
       </div>
 
-      {/* Book button */}
       {profile?.role === 'student' && services.length > 0 && (
         <Link
           to={`/book/${id}`}
@@ -98,7 +94,6 @@ export default function ProviderProfile() {
         </Link>
       )}
 
-      {/* Reviews */}
       <div>
         <h2 className="font-heading text-xl font-semibold text-gray-800 mb-3">Reviews</h2>
         {reviews.length === 0 ? (

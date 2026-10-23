@@ -32,7 +32,6 @@ export default function Signup() {
     <div className="min-h-screen bg-blush-50 flex items-center justify-center px-4 py-12">
       <div className="bg-white rounded-3xl shadow-sm border border-blush-100 p-8 w-full max-w-md">
 
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="font-heading text-3xl font-bold text-gray-900">Create account</h1>
           <p className="text-gray-400 text-sm mt-1">Join PrettyBooked</p>
@@ -44,7 +43,7 @@ export default function Signup() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
 
-          {/* Role selector — shown first so it's obvious */}
+          {/* The role picker comes first so it is easy to spot */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">I am a…</label>
             <div className="grid grid-cols-2 gap-3">

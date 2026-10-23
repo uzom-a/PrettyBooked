@@ -71,7 +71,6 @@ export default function MyBookings() {
               <p className="text-sm font-semibold text-blush-600 mt-2">${b.services?.price}</p>
 
               <div className="flex gap-2 mt-4">
-                {/* Message provider */}
                 {providerUserId && (
                   <Link
                     to={`/messages/${providerUserId}`}
@@ -81,7 +80,6 @@ export default function MyBookings() {
                   </Link>
                 )}
 
-                {/* Leave review on completed, unreviewd bookings */}
                 {b.status === 'completed' && !reviewed.has(b.id) && (
                   <button
                     onClick={() => navigate('/leave-review', {

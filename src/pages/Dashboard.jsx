@@ -121,7 +121,6 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Tabs */}
       <div className="flex gap-1 bg-blush-50 rounded-2xl p-1 mb-8 border border-blush-100">
         {['bookings', 'services', 'availability'].map((t) => (
           <button
@@ -136,7 +135,6 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Bookings tab */}
       {tab === 'bookings' && (
         <div className="space-y-4">
           {bookings.length === 0 && <p className="text-gray-400 text-sm">No bookings yet.</p>}
@@ -172,7 +170,6 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Services tab */}
       {tab === 'services' && (
         <div>
           <div className="space-y-3 mb-6">
@@ -231,7 +228,6 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Availability tab */}
       {tab === 'availability' && (
         <div>
           <p className="text-sm text-gray-400 mb-5">Toggle the days you're available and set your hours.</p>
