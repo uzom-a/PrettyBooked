@@ -15,6 +15,8 @@ import CheckEmail from './pages/CheckEmail'
 import Messages from './pages/Messages'
 import Conversation from './pages/Conversation'
 import LeaveReview from './pages/LeaveReview'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 
 export default function App() {
   return (
@@ -36,6 +38,8 @@ export default function App() {
             <Route path="/messages" element={<Messages />} />
             <Route path="/messages/:otherId" element={<Conversation />} />
             <Route path="/leave-review" element={<LeaveReview />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
           </Routes>
         </Layout>
       </BrowserRouter>
