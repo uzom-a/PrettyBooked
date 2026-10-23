@@ -53,6 +53,10 @@ export default function Landing() {
       <section className="bg-blush-50 border-t border-blush-100 py-10 text-center">
         <p className="font-heading text-xl text-blush-600 font-semibold">PrettyBooked</p>
         <p className="text-sm text-gray-400 mt-1">Made for GSU ladies, by GSU ladies</p>
+        <nav className="flex justify-center gap-6 mt-4 text-sm">
+          <Link to="/privacy" className="text-gray-500 hover:text-blush-600 transition-colors">Privacy</Link>
+          <Link to="/terms" className="text-gray-500 hover:text-blush-600 transition-colors">Terms</Link>
+        </nav>
       </section>
     </div>
   )
