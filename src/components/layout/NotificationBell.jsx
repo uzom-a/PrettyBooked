@@ -83,7 +83,7 @@ export default function NotificationBell({ profile }) {
 
           <div className="max-h-96 overflow-y-auto">
             {notifications.length === 0 ? (
-              <p className="text-gray-400 text-sm text-center py-8">You're all caught up 💗</p>
+              <p className="text-gray-400 text-sm text-center py-8">No notifications yet</p>
             ) : (
               notifications.map((n) => {
                 const renderer = MESSAGES[n.type] || (() => 'New activity')

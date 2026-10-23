@@ -18,7 +18,6 @@ export default function CheckEmail() {
   return (
     <div className="min-h-screen bg-blush-50 flex items-center justify-center px-4">
       <div className="bg-white rounded-3xl shadow-sm border border-blush-100 p-10 w-full max-w-md text-center">
-        <div className="text-6xl mb-6">💌</div>
         <h1 className="font-heading text-2xl font-bold text-gray-900 mb-2">Check your email</h1>
         <p className="text-gray-500 text-sm mb-6">
           We sent a confirmation link to <span className="font-semibold text-gray-700">{email}</span>.

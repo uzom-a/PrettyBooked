@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 
 const CATEGORIES = [
-  { name: 'Braider', emoji: '💇🏾‍♀️', slug: 'braider', desc: 'Knotless, box braids, twists & more' },
-  { name: 'Nail Tech', emoji: '💅🏾', slug: 'nail-tech', desc: 'Acrylics, gel, nail art & more' },
-  { name: 'Lash Tech', emoji: '✨', slug: 'lash-tech', desc: 'Classic, hybrid & volume sets' },
-  { name: 'Seamstress', emoji: '🧵', slug: 'seamstress', desc: 'Alterations, custom fits & more' },
+  { name: 'Braider', slug: 'braider', desc: 'Knotless, box braids, twists & more' },
+  { name: 'Nail Tech', slug: 'nail-tech', desc: 'Acrylics, gel, nail art & more' },
+  { name: 'Lash Tech', slug: 'lash-tech', desc: 'Classic, hybrid & volume sets' },
+  { name: 'Seamstress', slug: 'seamstress', desc: 'Alterations, custom fits & more' },
 ]
 
 export default function Landing() {
@@ -26,7 +26,7 @@ export default function Landing() {
           to="/browse/braider"
           className="bg-black text-white px-10 py-3.5 rounded-full font-semibold text-lg hover:bg-gray-800 transition-colors shadow-md"
         >
-          Book Now ✨
+          Book now
         </Link>
       </section>
 
@@ -44,7 +44,6 @@ export default function Landing() {
               to={`/browse/${cat.slug}`}
               className="bg-white rounded-3xl shadow-sm border border-blush-100 p-6 flex flex-col items-center gap-3 hover:shadow-md hover:-translate-y-1 transition-all text-center group"
             >
-              <span className="text-5xl">{cat.emoji}</span>
               <span className="font-heading font-semibold text-gray-800 group-hover:text-blush-600 transition-colors">
                 {cat.name}
               </span>
@@ -56,7 +55,7 @@ export default function Landing() {
 
       {/* Footer tagline */}
       <section className="bg-blush-50 border-t border-blush-100 py-10 text-center">
-        <p className="font-heading text-xl text-blush-600 font-semibold">PrettyBooked 💗</p>
+        <p className="font-heading text-xl text-blush-600 font-semibold">PrettyBooked</p>
         <p className="text-sm text-gray-400 mt-1">Made for GSU ladies, by GSU ladies</p>
       </section>
     </div>

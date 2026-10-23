@@ -50,7 +50,7 @@ export default function ProviderProfile() {
             {provider.category.replace('-', ' ')}
           </span>
           {avgRating && (
-            <p className="text-sm text-gray-500 mt-2">⭐ {avgRating} · {reviews.length} review{reviews.length !== 1 ? 's' : ''}</p>
+            <p className="text-sm text-gray-500 mt-2">★ {avgRating} · {reviews.length} review{reviews.length !== 1 ? 's' : ''}</p>
           )}
           <p className="text-gray-600 mt-3 text-sm leading-relaxed">{provider.bio}</p>
         </div>

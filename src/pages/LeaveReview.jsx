@@ -34,7 +34,6 @@ export default function LeaveReview() {
     <div className="min-h-screen bg-blush-50 flex items-center justify-center px-4">
       <div className="bg-white rounded-3xl shadow-sm border border-blush-100 p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="text-5xl mb-3">⭐</div>
           <h1 className="font-heading text-2xl font-bold text-gray-900">Leave a Review</h1>
           <p className="text-gray-400 text-sm mt-1">How was your experience with <span className="font-semibold text-gray-600">{providerName}</span>?</p>
         </div>
@@ -55,9 +54,10 @@ export default function LeaveReview() {
                   onClick={() => setRating(star)}
                   onMouseEnter={() => setHovered(star)}
                   onMouseLeave={() => setHovered(0)}
-                  className="text-4xl transition-transform hover:scale-110"
+                  aria-label={`${star} star${star > 1 ? 's' : ''}`}
+                  className={`text-4xl transition-transform hover:scale-110 ${star <= (hovered || rating) ? 'text-yellow-400' : 'text-gray-300'}`}
                 >
-                  {star <= (hovered || rating) ? '⭐' : '☆'}
+                  ★
                 </button>
               ))}
             </div>

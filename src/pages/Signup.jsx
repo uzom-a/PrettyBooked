@@ -35,7 +35,7 @@ export default function Signup() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="font-heading text-3xl font-bold text-gray-900">Create account</h1>
-          <p className="text-gray-400 text-sm mt-1">Join PrettyBooked 💗</p>
+          <p className="text-gray-400 text-sm mt-1">Join PrettyBooked</p>
         </div>
 
         {error && (
@@ -51,25 +51,23 @@ export default function Signup() {
               <button
                 type="button"
                 onClick={() => setForm({ ...form, role: 'student' })}
-                className={`py-4 rounded-2xl border-2 font-semibold text-sm transition-all flex flex-col items-center gap-1 ${
+                className={`py-4 rounded-2xl border-2 font-semibold text-sm transition-all ${
                   form.role === 'student'
                     ? 'border-blush-500 bg-blush-50 text-blush-600'
                     : 'border-gray-200 text-gray-500 hover:border-blush-200 bg-white'
                 }`}
               >
-                <span className="text-2xl">🎓</span>
                 Student
               </button>
               <button
                 type="button"
                 onClick={() => setForm({ ...form, role: 'provider' })}
-                className={`py-4 rounded-2xl border-2 font-semibold text-sm transition-all flex flex-col items-center gap-1 ${
+                className={`py-4 rounded-2xl border-2 font-semibold text-sm transition-all ${
                   form.role === 'provider'
                     ? 'border-blush-500 bg-blush-50 text-blush-600'
                     : 'border-gray-200 text-gray-500 hover:border-blush-200 bg-white'
                 }`}
               >
-                <span className="text-2xl">💅🏾</span>
                 Provider
               </button>
             </div>

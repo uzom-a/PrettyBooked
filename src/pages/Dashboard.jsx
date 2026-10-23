@@ -113,7 +113,7 @@ export default function Dashboard() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-12">
       <h1 className="font-heading text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-      <p className="text-gray-400 text-sm mb-6">Welcome back, {profile?.full_name} 💗</p>
+      <p className="text-gray-400 text-sm mb-6">Welcome back, {profile?.full_name}</p>
 
       {!providerProfile?.is_approved && (
         <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-2xl p-4 mb-6 text-sm">

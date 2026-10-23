@@ -96,7 +96,7 @@ export default function Conversation() {
       <div className="flex-1 overflow-y-auto space-y-3 mb-4">
         {messages.length === 0 && (
           <p className="text-center text-gray-400 text-sm py-8">
-            No messages yet. Say hi! 👋
+            No messages yet.
           </p>
         )}
         {messages.map((msg) => {
