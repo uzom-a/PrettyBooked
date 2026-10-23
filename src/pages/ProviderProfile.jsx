@@ -94,7 +94,7 @@ export default function ProviderProfile() {
           to={`/book/${id}`}
           className="block w-full text-center bg-black text-white py-3.5 rounded-full font-semibold text-lg hover:bg-gray-800 transition-colors shadow-md mb-8"
         >
-          Book an Appointment
+          Book an appointment
         </Link>
       )}
 

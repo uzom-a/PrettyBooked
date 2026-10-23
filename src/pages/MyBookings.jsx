@@ -36,7 +36,7 @@ export default function MyBookings() {
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-12">
-      <h1 className="font-heading text-3xl font-bold text-gray-900 mb-8">My Bookings</h1>
+      <h1 className="font-heading text-3xl font-bold text-gray-900 mb-8">My bookings</h1>
 
       {loading && <p className="text-gray-400">Loading…</p>}
 
@@ -89,7 +89,7 @@ export default function MyBookings() {
                     })}
                     className="flex-1 bg-black text-white py-1.5 rounded-full text-sm font-semibold hover:bg-gray-800 transition-colors"
                   >
-                    Leave Review
+                    Leave review
                   </button>
                 )}
 

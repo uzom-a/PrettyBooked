@@ -34,7 +34,7 @@ export default function LeaveReview() {
     <div className="min-h-screen bg-blush-50 flex items-center justify-center px-4">
       <div className="bg-white rounded-3xl shadow-sm border border-blush-100 p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="font-heading text-2xl font-bold text-gray-900">Leave a Review</h1>
+          <h1 className="font-heading text-2xl font-bold text-gray-900">Leave a review</h1>
           <p className="text-gray-400 text-sm mt-1">How was your experience with <span className="font-semibold text-gray-600">{providerName}</span>?</p>
         </div>
 
@@ -87,7 +87,7 @@ export default function LeaveReview() {
             disabled={submitting}
             className="w-full bg-black text-white py-3 rounded-full font-semibold hover:bg-gray-800 disabled:opacity-50 transition-colors"
           >
-            {submitting ? 'Submitting…' : 'Submit Review'}
+            {submitting ? 'Submitting…' : 'Submit review'}
           </button>
         </form>
       </div>

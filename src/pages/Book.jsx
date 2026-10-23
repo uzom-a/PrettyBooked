@@ -237,7 +237,7 @@ export default function Book() {
                 disabled={submitting}
                 className="flex-1 bg-black text-white py-2.5 rounded-full font-semibold hover:bg-gray-800 disabled:opacity-40 transition-colors"
               >
-                {submitting ? 'Booking…' : 'Confirm Booking'}
+                {submitting ? 'Booking…' : 'Confirm booking'}
               </button>
             </div>
           </>

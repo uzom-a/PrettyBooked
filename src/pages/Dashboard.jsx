@@ -164,7 +164,7 @@ export default function Dashboard() {
               )}
               {b.status === 'confirmed' && (
                 <button onClick={() => updateBookingStatus(b.id, 'completed')} className="mt-4 w-full border border-gray-200 text-gray-600 py-1.5 rounded-full text-sm font-semibold hover:bg-gray-50 transition-colors">
-                  Mark as Completed
+                  Mark as completed
                 </button>
               )}
             </div>
@@ -225,7 +225,7 @@ export default function Dashboard() {
               disabled={addingService}
               className="w-full bg-black text-white py-2 rounded-full text-sm font-semibold hover:bg-gray-800 disabled:opacity-40 transition-colors"
             >
-              {addingService ? 'Adding…' : 'Add Service'}
+              {addingService ? 'Adding…' : 'Add service'}
             </button>
           </form>
         </div>
@@ -279,7 +279,7 @@ export default function Dashboard() {
             disabled={savingAvail}
             className="w-full bg-black text-white py-3 rounded-full font-semibold hover:bg-gray-800 disabled:opacity-40 transition-colors"
           >
-            {savingAvail ? 'Saving…' : 'Save Availability'}
+            {savingAvail ? 'Saving…' : 'Save availability'}
           </button>
         </div>
       )}
