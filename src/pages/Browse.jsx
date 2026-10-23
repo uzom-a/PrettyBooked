@@ -35,8 +35,7 @@ export default function Browse() {
 
       {!loading && providers.length === 0 && (
         <div className="text-center py-20 text-gray-400">
-          <p className="text-lg">No providers yet in this category.</p>
-          <p className="text-sm mt-2">Check back soon!</p>
+          <p className="text-lg">No stylists in this category yet.</p>
         </div>
       )}
 

@@ -20,7 +20,7 @@ export default function Landing() {
           <span className="text-mauve-500">Feel beautiful.</span>
         </h1>
         <p className="text-gray-500 text-lg mb-10 max-w-md mx-auto">
-          Book trusted campus providers for braids, nails, lashes, alterations and more — all in one place.
+          Book braiders, nail techs, lash techs and seamstresses at Grambling State.
         </p>
         <Link
           to="/browse/braider"
@@ -32,10 +32,9 @@ export default function Landing() {
 
       {/* Categories */}
       <section className="max-w-5xl mx-auto px-6 py-20">
-        <h2 className="font-heading text-3xl font-bold text-center text-blush-700 mb-3">
-          Browse by Category
+        <h2 className="font-heading text-3xl font-bold text-center text-blush-700 mb-12">
+          Browse by category
         </h2>
-        <p className="text-center text-gray-400 mb-12">Find exactly what you're looking for</p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {CATEGORIES.map((cat) => (

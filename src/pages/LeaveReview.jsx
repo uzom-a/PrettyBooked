@@ -63,7 +63,7 @@ export default function LeaveReview() {
             </div>
             {rating > 0 && (
               <p className="text-sm text-blush-500 mt-2 font-medium">
-                {['', 'Poor', 'Fair', 'Good', 'Great', 'Amazing!'][rating]}
+                {['', 'Poor', 'Fair', 'Good', 'Great', 'Excellent'][rating]}
               </p>
             )}
           </div>

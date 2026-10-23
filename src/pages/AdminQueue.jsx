@@ -45,8 +45,7 @@ export default function AdminQueue() {
 
       {!loading && pending.length === 0 && (
         <div className="text-center py-20 text-gray-400">
-          <p className="text-lg">All caught up!</p>
-          <p className="text-sm mt-1">No pending applications.</p>
+          <p className="text-lg">No stylists waiting for approval.</p>
         </div>
       )}
 
