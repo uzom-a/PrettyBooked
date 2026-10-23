@@ -38,15 +38,14 @@ export default function AdminQueue() {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-12">
-      <h1 className="text-3xl font-bold mb-2">Provider Approvals</h1>
+      <h1 className="text-3xl font-bold mb-2">Stylist approvals</h1>
       <p className="text-gray-500 mb-8">Review and approve new provider applications.</p>
 
       {loading && <p className="text-gray-500">Loading…</p>}
 
       {!loading && pending.length === 0 && (
         <div className="text-center py-20 text-gray-400">
-          <p className="text-lg">All caught up!</p>
-          <p className="text-sm mt-1">No pending applications.</p>
+          <p className="text-lg">No stylists waiting for approval.</p>
         </div>
       )}
 

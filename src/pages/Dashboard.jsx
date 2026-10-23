@@ -113,7 +113,7 @@ export default function Dashboard() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-12">
       <h1 className="font-heading text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-      <p className="text-gray-400 text-sm mb-6">Welcome back, {profile?.full_name} 💗</p>
+      <p className="text-gray-400 text-sm mb-6">Welcome back, {profile?.full_name}</p>
 
       {!providerProfile?.is_approved && (
         <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-2xl p-4 mb-6 text-sm">
@@ -121,7 +121,6 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Tabs */}
       <div className="flex gap-1 bg-blush-50 rounded-2xl p-1 mb-8 border border-blush-100">
         {['bookings', 'services', 'availability'].map((t) => (
           <button
@@ -136,7 +135,6 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Bookings tab */}
       {tab === 'bookings' && (
         <div className="space-y-4">
           {bookings.length === 0 && <p className="text-gray-400 text-sm">No bookings yet.</p>}
@@ -164,7 +162,7 @@ export default function Dashboard() {
               )}
               {b.status === 'confirmed' && (
                 <button onClick={() => updateBookingStatus(b.id, 'completed')} className="mt-4 w-full border border-gray-200 text-gray-600 py-1.5 rounded-full text-sm font-semibold hover:bg-gray-50 transition-colors">
-                  Mark as Completed
+                  Mark as completed
                 </button>
               )}
             </div>
@@ -172,7 +170,6 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Services tab */}
       {tab === 'services' && (
         <div>
           <div className="space-y-3 mb-6">
@@ -225,13 +222,12 @@ export default function Dashboard() {
               disabled={addingService}
               className="w-full bg-black text-white py-2 rounded-full text-sm font-semibold hover:bg-gray-800 disabled:opacity-40 transition-colors"
             >
-              {addingService ? 'Adding…' : 'Add Service'}
+              {addingService ? 'Adding…' : 'Add service'}
             </button>
           </form>
         </div>
       )}
 
-      {/* Availability tab */}
       {tab === 'availability' && (
         <div>
           <p className="text-sm text-gray-400 mb-5">Toggle the days you're available and set your hours.</p>
@@ -279,7 +275,7 @@ export default function Dashboard() {
             disabled={savingAvail}
             className="w-full bg-black text-white py-3 rounded-full font-semibold hover:bg-gray-800 disabled:opacity-40 transition-colors"
           >
-            {savingAvail ? 'Saving…' : 'Save Availability'}
+            {savingAvail ? 'Saving…' : 'Save availability'}
           </button>
         </div>
       )}

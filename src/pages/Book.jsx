@@ -97,7 +97,6 @@ export default function Book() {
 
   return (
     <div className="max-w-lg mx-auto px-6 py-12">
-      {/* Progress */}
       <div className="flex items-center gap-2 mb-8">
         {[1, 2, 3].map((s) => (
           <div key={s} className="flex items-center gap-2">
@@ -116,7 +115,6 @@ export default function Book() {
 
       <div className="bg-white rounded-3xl shadow-sm border border-blush-100 p-8">
 
-        {/* Step 1 — Service */}
         {step === 1 && (
           <>
             <h2 className="font-heading text-2xl font-bold text-gray-900 mb-6">Choose a service</h2>
@@ -138,7 +136,6 @@ export default function Book() {
           </>
         )}
 
-        {/* Step 2 — Date & Time */}
         {step === 2 && (
           <>
             <h2 className="font-heading text-2xl font-bold text-gray-900 mb-6">Pick a date & time</h2>
@@ -194,7 +191,6 @@ export default function Book() {
           </>
         )}
 
-        {/* Step 3 — Confirm */}
         {step === 3 && (
           <>
             <h2 className="font-heading text-2xl font-bold text-gray-900 mb-6">Confirm your booking</h2>
@@ -237,7 +233,7 @@ export default function Book() {
                 disabled={submitting}
                 className="flex-1 bg-black text-white py-2.5 rounded-full font-semibold hover:bg-gray-800 disabled:opacity-40 transition-colors"
               >
-                {submitting ? 'Booking…' : 'Confirm Booking'}
+                {submitting ? 'Booking…' : 'Confirm booking'}
               </button>
             </div>
           </>

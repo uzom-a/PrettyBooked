@@ -24,7 +24,7 @@ export default function Navbar() {
           <>
             {profile.role === 'student' && (
               <Link to="/bookings" className="text-sm font-medium text-mauve-600 hover:text-blush-600 transition-colors">
-                My Bookings
+                My bookings
               </Link>
             )}
             {profile.role === 'provider' && (

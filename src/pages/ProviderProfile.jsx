@@ -35,7 +35,6 @@ export default function ProviderProfile() {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-12">
-      {/* Header */}
       <div className="bg-white rounded-3xl shadow-sm border border-blush-100 p-8 mb-6 flex gap-6 items-start">
         {provider.avatar_url ? (
           <img src={provider.avatar_url} alt={provider.profiles?.full_name} className="w-24 h-24 rounded-full object-cover flex-shrink-0" />
@@ -50,13 +49,12 @@ export default function ProviderProfile() {
             {provider.category.replace('-', ' ')}
           </span>
           {avgRating && (
-            <p className="text-sm text-gray-500 mt-2">⭐ {avgRating} · {reviews.length} review{reviews.length !== 1 ? 's' : ''}</p>
+            <p className="text-sm text-gray-500 mt-2">★ {avgRating} · {reviews.length} review{reviews.length !== 1 ? 's' : ''}</p>
           )}
           <p className="text-gray-600 mt-3 text-sm leading-relaxed">{provider.bio}</p>
         </div>
       </div>
 
-      {/* Portfolio */}
       {provider.portfolio_urls?.length > 0 && (
         <div className="mb-6">
           <h2 className="font-heading text-xl font-semibold text-gray-800 mb-3">Portfolio</h2>
@@ -68,7 +66,6 @@ export default function ProviderProfile() {
         </div>
       )}
 
-      {/* Services */}
       <div className="mb-6">
         <h2 className="font-heading text-xl font-semibold text-gray-800 mb-3">Services</h2>
         {services.length === 0 ? (
@@ -88,17 +85,15 @@ export default function ProviderProfile() {
         )}
       </div>
 
-      {/* Book button */}
       {profile?.role === 'student' && services.length > 0 && (
         <Link
           to={`/book/${id}`}
           className="block w-full text-center bg-black text-white py-3.5 rounded-full font-semibold text-lg hover:bg-gray-800 transition-colors shadow-md mb-8"
         >
-          Book an Appointment
+          Book an appointment
         </Link>
       )}
 
-      {/* Reviews */}
       <div>
         <h2 className="font-heading text-xl font-semibold text-gray-800 mb-3">Reviews</h2>
         {reviews.length === 0 ? (

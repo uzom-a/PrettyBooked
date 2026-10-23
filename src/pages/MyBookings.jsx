@@ -36,7 +36,7 @@ export default function MyBookings() {
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-12">
-      <h1 className="font-heading text-3xl font-bold text-gray-900 mb-8">My Bookings</h1>
+      <h1 className="font-heading text-3xl font-bold text-gray-900 mb-8">My bookings</h1>
 
       {loading && <p className="text-gray-400">Loading…</p>}
 
@@ -71,7 +71,6 @@ export default function MyBookings() {
               <p className="text-sm font-semibold text-blush-600 mt-2">${b.services?.price}</p>
 
               <div className="flex gap-2 mt-4">
-                {/* Message provider */}
                 {providerUserId && (
                   <Link
                     to={`/messages/${providerUserId}`}
@@ -81,7 +80,6 @@ export default function MyBookings() {
                   </Link>
                 )}
 
-                {/* Leave review on completed, unreviewd bookings */}
                 {b.status === 'completed' && !reviewed.has(b.id) && (
                   <button
                     onClick={() => navigate('/leave-review', {
@@ -89,7 +87,7 @@ export default function MyBookings() {
                     })}
                     className="flex-1 bg-black text-white py-1.5 rounded-full text-sm font-semibold hover:bg-gray-800 transition-colors"
                   >
-                    Leave Review
+                    Leave review
                   </button>
                 )}
 
