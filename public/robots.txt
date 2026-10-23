@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /bookings
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /messages
+Disallow: /create-profile
+Disallow: /leave-review
+Disallow: /check-email
+Disallow: /book/
+
+Sitemap: https://pretty-booked.vercel.app/sitemap.xml
