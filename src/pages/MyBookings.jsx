@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { friendlyError } from '../lib/errors'
 import { useAuth } from '../context/AuthContext'
 
 const STATUS_STYLES = {
@@ -16,6 +17,19 @@ export default function MyBookings() {
   const [bookings, setBookings] = useState([])
   const [loading, setLoading] = useState(true)
   const [reviewed, setReviewed] = useState(new Set())
+  const [error, setError] = useState('')
+
+  async function cancelBooking(id) {
+    if (!window.confirm('Cancel this booking?')) return
+    setError('')
+    const { data, error: err } = await supabase
+      .from('bookings')
+      .update({ status: 'cancelled' })
+      .eq('id', id)
+      .select('id')
+    if (err || !data?.length) { setError(err ? friendlyError(err) : 'This booking could not be cancelled.'); return }
+    setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, status: 'cancelled' } : b)))
+  }
 
   useEffect(() => {
     async function load() {
@@ -39,6 +53,10 @@ export default function MyBookings() {
       <h1 className="font-heading text-3xl font-bold text-gray-900 mb-8">My bookings</h1>
 
       {loading && <p className="text-gray-400">Loading…</p>}
+
+      {error && (
+        <div className="bg-red-50 text-red-600 text-sm p-3 rounded-xl mb-5 border border-red-100">{error}</div>
+      )}
 
       {!loading && bookings.length === 0 && (
         <div className="text-center py-20 text-gray-400">
@@ -77,6 +95,15 @@ export default function MyBookings() {
                   >
                     Message
                   </Link>
+                )}
+
+                {['pending', 'confirmed'].includes(b.status) && new Date(`${b.date}T${b.time}`) > new Date() && (
+                  <button
+                    onClick={() => cancelBooking(b.id)}
+                    className="flex-1 border border-red-200 text-red-500 py-1.5 rounded-full text-sm font-semibold hover:bg-red-50 transition-colors"
+                  >
+                    Cancel booking
+                  </button>
                 )}
 
                 {b.status === 'completed' && !reviewed.has(b.id) && (
