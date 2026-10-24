@@ -112,3 +112,6 @@ create policy "Users can send messages" on public.messages for insert with check
 );
 
 commit;
+
+-- Tell the API about the new functions straight away.
+notify pgrst, 'reload schema';
