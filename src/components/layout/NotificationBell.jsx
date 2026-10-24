@@ -5,7 +5,9 @@ import { useNotifications } from '../../hooks/useNotifications'
 const MESSAGES = {
   booking_pending: (p) => `New booking request from ${p.student_name || 'a student'} for ${p.service_name || 'a service'}`,
   booking_confirmed: (p) => `${p.provider_name || 'Your provider'} confirmed your booking for ${p.service_name || 'a service'}`,
-  booking_cancelled: (p) => `${p.provider_name || 'Your provider'} cancelled your booking for ${p.service_name || 'a service'}`,
+  booking_cancelled: (p) => p.cancelled_by === 'student'
+    ? `${p.student_name || 'A student'} cancelled the booking for ${p.service_name || 'a service'}`
+    : `${p.provider_name || 'Your provider'} cancelled your booking for ${p.service_name || 'a service'}`,
   booking_completed: (p) => `${p.provider_name || 'Your provider'} marked your booking as completed`,
 }
 
@@ -23,6 +25,7 @@ function relativeTime(iso) {
 
 function destinationFor(notification, profile) {
   if (notification.type === 'booking_pending') return '/dashboard'
+  if (notification.payload?.cancelled_by === 'student') return '/dashboard'
   return '/bookings'
 }
 
