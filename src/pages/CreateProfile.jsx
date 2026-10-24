@@ -28,7 +28,8 @@ export default function CreateProfile() {
       if (photoFile) {
         const ext = photoFile.name.split('.').pop()
         const path = `avatars/${user.id}.${ext}`
-        await supabase.storage.from('avatars').upload(path, photoFile, { upsert: true })
+        const { error: uploadErr } = await supabase.storage.from('avatars').upload(path, photoFile, { upsert: true })
+        if (uploadErr) throw uploadErr
         const { data } = supabase.storage.from('avatars').getPublicUrl(path)
         avatarUrl = data.publicUrl
       }
@@ -36,12 +37,13 @@ export default function CreateProfile() {
       const portfolioUrls = []
       for (const file of portfolioFiles) {
         const path = `portfolio/${user.id}/${Date.now()}-${file.name}`
-        await supabase.storage.from('portfolio').upload(path, file)
+        const { error: uploadErr } = await supabase.storage.from('portfolio').upload(path, file)
+        if (uploadErr) throw uploadErr
         const { data } = supabase.storage.from('portfolio').getPublicUrl(path)
         portfolioUrls.push(data.publicUrl)
       }
 
-      await supabase.from('provider_profiles').insert({
+      const { error: insertErr } = await supabase.from('provider_profiles').insert({
         user_id: user.id,
         bio: form.bio,
         category: form.category,
@@ -49,6 +51,9 @@ export default function CreateProfile() {
         portfolio_urls: portfolioUrls,
         is_approved: true,
       })
+      if (insertErr?.code === '23505') throw new Error('You already have a stylist profile.')
+      if (insertErr?.code === '42501') throw new Error('Only stylist accounts can create a stylist profile.')
+      if (insertErr) throw insertErr
 
       navigate('/dashboard')
     } catch (err) {

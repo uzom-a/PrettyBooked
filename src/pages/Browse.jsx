@@ -13,14 +13,16 @@ export default function Browse() {
   const { category } = useParams()
   const [providers, setProviders] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     async function load() {
-      const { data } = await supabase
+      const { data, error: err } = await supabase
         .from('provider_profiles')
         .select('*, profiles(full_name)')
         .eq('category', category)
         .eq('is_approved', true)
+      setError(!!err)
       setProviders(data || [])
       setLoading(false)
     }
@@ -33,7 +35,11 @@ export default function Browse() {
 
       {loading && <p className="text-gray-500">Loading…</p>}
 
-      {!loading && providers.length === 0 && (
+      {!loading && error && (
+        <p className="text-center py-20 text-red-500">Stylists could not be loaded. Please refresh the page.</p>
+      )}
+
+      {!loading && !error && providers.length === 0 && (
         <div className="text-center py-20 text-gray-400">
           <p className="text-lg">No stylists in this category yet.</p>
         </div>

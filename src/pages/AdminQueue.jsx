@@ -8,6 +8,7 @@ export default function AdminQueue() {
   const navigate = useNavigate()
   const [pending, setPending] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     if (profile && profile.role !== 'admin') navigate('/')
@@ -27,12 +28,16 @@ export default function AdminQueue() {
   }, [])
 
   async function approve(id) {
-    await supabase.from('provider_profiles').update({ is_approved: true }).eq('id', id)
+    setError('')
+    const { error: err } = await supabase.from('provider_profiles').update({ is_approved: true }).eq('id', id)
+    if (err) { setError(err.message); return }
     setPending((prev) => prev.filter((p) => p.id !== id))
   }
 
   async function reject(id) {
-    await supabase.from('provider_profiles').delete().eq('id', id)
+    setError('')
+    const { error: err } = await supabase.from('provider_profiles').delete().eq('id', id)
+    if (err) { setError(err.message); return }
     setPending((prev) => prev.filter((p) => p.id !== id))
   }
 
@@ -42,6 +47,10 @@ export default function AdminQueue() {
       <p className="text-gray-500 mb-8">Review and approve new provider applications.</p>
 
       {loading && <p className="text-gray-500">Loading…</p>}
+
+      {error && (
+        <div className="bg-red-50 text-red-600 text-sm p-3 rounded-xl mb-6 border border-red-100">{error}</div>
+      )}
 
       {!loading && pending.length === 0 && (
         <div className="text-center py-20 text-gray-400">

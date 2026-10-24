@@ -27,6 +27,7 @@ test('each category page finishes loading', async ({ page }) => {
     await page.goto(`/browse/${slug}`)
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(heading)
     await expect(page.getByText('Loading…')).toBeHidden()
+    await expect(page.getByText('Stylists could not be loaded')).toBeHidden()
   }
 })
 
