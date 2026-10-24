@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
+import { friendlyError } from '../lib/errors'
 
 const DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 const DAY_LABELS = { mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday', fri: 'Friday', sat: 'Saturday', sun: 'Sunday' }
@@ -66,7 +67,7 @@ export default function Dashboard() {
   async function updateBookingStatus(id, status) {
     setError('')
     const { error: err } = await supabase.from('bookings').update({ status }).eq('id', id)
-    if (err) { setError(err.message); return }
+    if (err) { setError(friendlyError(err)); return }
     setBookings((prev) => prev.map((b) => b.id === id ? { ...b, status } : b))
   }
 
@@ -80,7 +81,7 @@ export default function Dashboard() {
       price: parseFloat(newService.price),
       duration_minutes: parseInt(newService.duration_minutes),
     }).select().single()
-    if (err) { setError(err.message); setAddingService(false); return }
+    if (err) { setError(friendlyError(err)); setAddingService(false); return }
     setServices((prev) => [...prev, data])
     setNewService({ name: '', price: '', duration_minutes: '' })
     setAddingService(false)
@@ -89,7 +90,7 @@ export default function Dashboard() {
   async function deleteService(id) {
     setError('')
     const { error: err } = await supabase.from('services').delete().eq('id', id)
-    if (err) { setError(err.message); return }
+    if (err) { setError(friendlyError(err)); return }
     setServices((prev) => prev.filter((s) => s.id !== id))
   }
 
@@ -110,18 +111,13 @@ export default function Dashboard() {
   async function saveAvailability() {
     setError('')
     setSavingAvail(true)
-    const { error: delErr } = await supabase.from('availability').delete().eq('provider_id', providerProfile.id)
-    if (delErr) { setError(delErr.message); setSavingAvail(false); return }
-    const rows = Object.entries(availability).map(([day, times]) => ({
-      provider_id: providerProfile.id,
+    const hours = Object.entries(availability).map(([day, times]) => ({
       day_of_week: day,
       open_time: times.open,
       close_time: times.close,
     }))
-    if (rows.length > 0) {
-      const { error: err } = await supabase.from('availability').insert(rows)
-      if (err) setError(err.message)
-    }
+    const { error: err } = await supabase.rpc('save_availability', { p_provider_id: providerProfile.id, p_hours: hours })
+    if (err) setError(friendlyError(err))
     setSavingAvail(false)
   }
 
@@ -197,9 +193,13 @@ export default function Dashboard() {
                     </div>
                   )}
                   {b.status === 'confirmed' && (
-                    <button onClick={() => updateBookingStatus(b.id, 'completed')} className="mt-4 w-full border border-gray-200 text-gray-600 py-1.5 rounded-full text-sm font-semibold hover:bg-gray-50 transition-colors">
-                      Mark as completed
-                    </button>
+                    new Date(`${b.date}T${b.time}`) <= new Date() ? (
+                      <button onClick={() => updateBookingStatus(b.id, 'completed')} className="mt-4 w-full border border-gray-200 text-gray-600 py-1.5 rounded-full text-sm font-semibold hover:bg-gray-50 transition-colors">
+                        Mark as completed
+                      </button>
+                    ) : (
+                      <p className="mt-4 text-xs text-gray-500">You can mark this completed once the appointment starts.</p>
+                    )
                   )}
                 </div>
               ))}

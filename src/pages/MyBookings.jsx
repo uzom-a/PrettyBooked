@@ -50,7 +50,6 @@ export default function MyBookings() {
       <div className="space-y-4">
         {bookings.map((b) => {
           const providerName = b.provider_profiles?.profiles?.full_name
-          const providerId = b.provider_profiles?.id
           const providerUserId = b.provider_profiles?.user_id
 
           return (
@@ -82,9 +81,7 @@ export default function MyBookings() {
 
                 {b.status === 'completed' && !reviewed.has(b.id) && (
                   <button
-                    onClick={() => navigate('/leave-review', {
-                      state: { providerId, providerName, bookingId: b.id }
-                    })}
+                    onClick={() => navigate(`/leave-review?booking=${b.id}`)}
                     className="flex-1 bg-black text-white py-1.5 rounded-full text-sm font-semibold hover:bg-gray-800 transition-colors"
                   >
                     Leave review

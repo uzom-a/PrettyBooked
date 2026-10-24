@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test'
 
 test('sign up asks you to pick student or stylist first', async ({ page }) => {
   await page.goto('/signup')
-  await page.getByPlaceholder('Your full name').fill('Test Person')
-  await page.getByPlaceholder('you@email.com').fill('test@example.com')
-  await page.getByPlaceholder('At least 6 characters').fill('secret123')
+  await page.getByLabel('Full name').fill('Test Person')
+  await page.getByLabel('Email').fill('test@example.com')
+  await page.getByLabel('Password').fill('secret123')
   await page.getByRole('button', { name: 'Create account' }).click()
   await expect(page.getByText('Please select if you are a student or provider.')).toBeVisible()
   await expect(page).toHaveURL('/signup')

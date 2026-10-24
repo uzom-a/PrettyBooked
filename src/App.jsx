@@ -30,15 +30,15 @@ export default function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/browse/:category" element={<Browse />} />
             <Route path="/provider/:id" element={<ProviderProfile />} />
-            <Route path="/book/:providerId" element={<RequireAuth><Book /></RequireAuth>} />
-            <Route path="/bookings" element={<RequireAuth><MyBookings /></RequireAuth>} />
-            <Route path="/create-profile" element={<RequireAuth><CreateProfile /></RequireAuth>} />
-            <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
-            <Route path="/admin" element={<RequireAuth><AdminQueue /></RequireAuth>} />
+            <Route path="/book/:providerId" element={<RequireAuth role="student"><Book /></RequireAuth>} />
+            <Route path="/bookings" element={<RequireAuth role="student"><MyBookings /></RequireAuth>} />
+            <Route path="/create-profile" element={<RequireAuth role="provider"><CreateProfile /></RequireAuth>} />
+            <Route path="/dashboard" element={<RequireAuth role="provider"><Dashboard /></RequireAuth>} />
+            <Route path="/admin" element={<RequireAuth role="admin"><AdminQueue /></RequireAuth>} />
             <Route path="/check-email" element={<CheckEmail />} />
             <Route path="/messages" element={<RequireAuth><Messages /></RequireAuth>} />
             <Route path="/messages/:otherId" element={<RequireAuth><Conversation /></RequireAuth>} />
-            <Route path="/leave-review" element={<RequireAuth><LeaveReview /></RequireAuth>} />
+            <Route path="/leave-review" element={<RequireAuth role="student"><LeaveReview /></RequireAuth>} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
           </Routes>

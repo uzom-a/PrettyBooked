@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
 
 const AuthContext = createContext({})
@@ -8,25 +8,34 @@ export function AuthProvider({ children }) {
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-      if (session?.user) fetchProfile(session.user.id)
-      else setLoading(false)
-    })
+  const profileFor = useRef(null)
 
+  useEffect(() => {
+    // This fires once on page load and again on sign in, sign out and token
+    // refresh. The profile is only fetched when the signed-in person changes.
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-      if (session?.user) fetchProfile(session.user.id)
-      else { setProfile(null); setLoading(false) }
+      const nextUser = session?.user ?? null
+      setUser(nextUser)
+      if (!nextUser) {
+        profileFor.current = null
+        setProfile(null)
+        setLoading(false)
+        return
+      }
+      if (profileFor.current === nextUser.id) return
+      profileFor.current = nextUser.id
+      setLoading(true)
+      // Supabase asks that other calls wait until this callback returns.
+      setTimeout(() => fetchProfile(nextUser.id), 0)
     })
 
     return () => listener.subscription.unsubscribe()
   }, [])
 
   async function fetchProfile(userId) {
-    const { data } = await supabase.from('profiles').select('id, full_name, role, created_at').eq('id', userId).single()
-    setProfile(data)
+    const { data, error } = await supabase.from('profiles').select('id, full_name, role, created_at').eq('id', userId).maybeSingle()
+    if (error) console.error('Could not load profile:', error.message)
+    setProfile(data ?? null)
     setLoading(false)
   }
 

@@ -33,4 +33,13 @@ test.describe('database links', () => {
     expect(res.status(), await res.text()).toBe(200)
     expect(await res.json()).toEqual([])
   })
+
+  test('saving opening hours is set up, and closed to visitors', async ({ request }) => {
+    const res = await request.post(`${url}/rest/v1/rpc/save_availability`, {
+      headers,
+      data: { p_provider_id: '00000000-0000-0000-0000-000000000000', p_hours: [] },
+    })
+    // A missing function would be a 404. Visitors are refused instead.
+    expect(res.status(), await res.text()).toBe(401)
+  })
 })
