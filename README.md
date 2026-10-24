@@ -25,3 +25,10 @@ React, Vite and Tailwind CSS on the front end. Supabase for sign-in, the databas
 
 ## Database
 Run the files in `supabase/migrations` in order (001 to 006) in the Supabase SQL Editor.
+
+## Tests
+The tests in `e2e` open the site in a real browser, on a desktop screen and a phone screen, and click through it like a visitor would. They need the same `.env` file as above.
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
