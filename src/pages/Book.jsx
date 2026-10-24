@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { friendlyError } from '../lib/errors'
 import { useAuth } from '../context/AuthContext'
 
 const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
@@ -102,8 +103,11 @@ export default function Book() {
       status: 'pending',
     })
     if (err) {
-      setError(err.message)
+      // Send them back to pick again, since the time may have just gone.
+      setError(friendlyError(err))
       setSubmitting(false)
+      setSelectedTime('')
+      setStep(2)
       loadTakenTimes(selectedDate)
       return
     }
@@ -131,6 +135,9 @@ export default function Book() {
       </div>
 
       <div className="bg-white rounded-3xl shadow-sm border border-blush-100 p-8">
+        {error && (
+          <div className="bg-red-50 text-red-600 text-sm p-3 rounded-xl mb-5 border border-red-100">{error}</div>
+        )}
 
         {step === 1 && (
           <>
@@ -163,7 +170,7 @@ export default function Book() {
                 type="date"
                 min={minDate}
                 value={selectedDate}
-                onChange={(e) => { setSelectedDate(e.target.value); setSelectedTime('') }}
+                onChange={(e) => { setSelectedDate(e.target.value); setSelectedTime(''); setError('') }}
                 className="w-full border border-blush-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blush-300"
               />
             </div>
@@ -238,10 +245,6 @@ export default function Book() {
                 <span className="font-bold text-blush-600 text-base">${selectedService?.price}</span>
               </div>
             </div>
-
-            {error && (
-              <div className="bg-red-50 text-red-600 text-sm p-3 rounded-xl mb-5 border border-red-100">{error}</div>
-            )}
 
             <p className="text-xs text-gray-400 text-center mb-6">Payment is handled in person at the time of your appointment.</p>
 
