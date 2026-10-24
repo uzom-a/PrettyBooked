@@ -83,7 +83,7 @@ export default function Conversation() {
     if (error) {
       setText(content)
       setError(error.code === '42501'
-        ? 'You can only message stylists or students you have a booking with.'
+        ? 'You can message any stylist, or reply to someone who messaged you.'
         : 'Message not sent. Please try again.')
     }
     setSending(false)

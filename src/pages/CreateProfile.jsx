@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { friendlyError } from '../lib/errors'
 import { useAuth } from '../context/AuthContext'
 
 const CATEGORIES = ['braider', 'nail-tech', 'lash-tech', 'seamstress']
@@ -29,7 +30,7 @@ export default function CreateProfile() {
         const ext = photoFile.name.split('.').pop()
         const path = `avatars/${user.id}.${ext}`
         const { error: uploadErr } = await supabase.storage.from('avatars').upload(path, photoFile, { upsert: true })
-        if (uploadErr) throw uploadErr
+        if (uploadErr) throw new Error('Photo upload failed. Use a JPG, PNG or WebP under 5 MB.')
         const { data } = supabase.storage.from('avatars').getPublicUrl(path)
         avatarUrl = data.publicUrl
       }
@@ -38,7 +39,7 @@ export default function CreateProfile() {
       for (const file of portfolioFiles) {
         const path = `portfolio/${user.id}/${Date.now()}-${file.name}`
         const { error: uploadErr } = await supabase.storage.from('portfolio').upload(path, file)
-        if (uploadErr) throw uploadErr
+        if (uploadErr) throw new Error('Photo upload failed. Use a JPG, PNG or WebP under 5 MB.')
         const { data } = supabase.storage.from('portfolio').getPublicUrl(path)
         portfolioUrls.push(data.publicUrl)
       }
@@ -53,7 +54,7 @@ export default function CreateProfile() {
       })
       if (insertErr?.code === '23505') throw new Error('You already have a stylist profile.')
       if (insertErr?.code === '42501') throw new Error('Only stylist accounts can create a stylist profile.')
-      if (insertErr) throw insertErr
+      if (insertErr) throw new Error(friendlyError(insertErr))
 
       navigate('/dashboard')
     } catch (err) {
@@ -77,8 +78,9 @@ export default function CreateProfile() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+            <label htmlFor="profile-category" className="block text-sm font-medium text-gray-700 mb-1">Category</label>
             <select
+              id="profile-category"
               name="category"
               value={form.category}
               onChange={handleChange}
@@ -93,8 +95,9 @@ export default function CreateProfile() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
+            <label htmlFor="profile-bio" className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
             <textarea
+              id="profile-bio"
               name="bio"
               value={form.bio}
               onChange={handleChange}
@@ -106,8 +109,9 @@ export default function CreateProfile() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Profile photo</label>
+            <label htmlFor="profile-photo" className="block text-sm font-medium text-gray-700 mb-1">Profile photo</label>
             <input
+              id="profile-photo"
               type="file"
               accept="image/*"
               onChange={(e) => setPhotoFile(e.target.files[0])}
@@ -116,10 +120,11 @@ export default function CreateProfile() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="profile-portfolio" className="block text-sm font-medium text-gray-700 mb-1">
               Portfolio photos <span className="text-gray-400 font-normal">(optional, up to 6)</span>
             </label>
             <input
+              id="profile-portfolio"
               type="file"
               accept="image/*"
               multiple

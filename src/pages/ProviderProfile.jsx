@@ -94,6 +94,15 @@ export default function ProviderProfile() {
         </Link>
       )}
 
+      {profile && profile.id !== provider.user_id && (
+        <Link
+          to={`/messages/${provider.user_id}`}
+          className="block w-full text-center border border-blush-200 text-blush-600 py-3 rounded-full font-semibold hover:bg-blush-50 transition-colors mb-8"
+        >
+          Message {provider.profiles?.full_name?.split(' ')[0] ?? 'stylist'}
+        </Link>
+      )}
+
       <div>
         <h2 className="font-heading text-xl font-semibold text-gray-800 mb-3">Reviews</h2>
         {reviews.length === 0 ? (
