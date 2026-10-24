@@ -45,7 +45,7 @@ export default function Signup() {
 
           {/* The role picker comes first so it is easy to spot */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">I am a…</label>
+            <p className="block text-sm font-semibold text-gray-700 mb-2">I am a…</p>
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
@@ -73,8 +73,9 @@ export default function Signup() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Full name</label>
+            <label htmlFor="signup-name" className="block text-sm font-medium text-gray-700 mb-1">Full name</label>
             <input
+              id="signup-name"
               name="fullName"
               value={form.fullName}
               onChange={handleChange}
@@ -85,8 +86,9 @@ export default function Signup() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label htmlFor="signup-email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input
+              id="signup-email"
               type="email"
               name="email"
               value={form.email}
@@ -98,8 +100,9 @@ export default function Signup() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <label htmlFor="signup-password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
             <input
+              id="signup-password"
               type="password"
               name="password"
               value={form.password}

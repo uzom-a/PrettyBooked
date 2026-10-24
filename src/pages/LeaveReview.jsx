@@ -83,7 +83,7 @@ export default function LeaveReview() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="text-center">
-            <label className="block text-sm font-medium text-gray-700 mb-3">Your rating</label>
+            <p className="block text-sm font-medium text-gray-700 mb-3">Your rating</p>
             <div className="flex justify-center gap-2">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
@@ -107,10 +107,11 @@ export default function LeaveReview() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="review-comment" className="block text-sm font-medium text-gray-700 mb-1">
               Comment <span className="text-gray-400 font-normal">(optional)</span>
             </label>
             <textarea
+              id="review-comment"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               rows={4}

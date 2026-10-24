@@ -165,8 +165,9 @@ export default function Book() {
             <h2 className="font-heading text-2xl font-bold text-gray-900 mb-6">Pick a date & time</h2>
 
             <div className="mb-5">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+              <label htmlFor="book-date" className="block text-sm font-medium text-gray-700 mb-1">Date</label>
               <input
+                id="book-date"
                 type="date"
                 min={minDate}
                 value={selectedDate}
@@ -177,7 +178,7 @@ export default function Book() {
 
             {selectedDate && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Available times</label>
+                <p className="block text-sm font-medium text-gray-700 mb-2">Available times</p>
                 {availableSlots().length === 0 ? (
                   <p className="text-sm text-gray-400">No available slots on this date. Try another day.</p>
                 ) : (

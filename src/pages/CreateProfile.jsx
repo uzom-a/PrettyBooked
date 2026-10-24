@@ -78,8 +78,9 @@ export default function CreateProfile() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+            <label htmlFor="profile-category" className="block text-sm font-medium text-gray-700 mb-1">Category</label>
             <select
+              id="profile-category"
               name="category"
               value={form.category}
               onChange={handleChange}
@@ -94,8 +95,9 @@ export default function CreateProfile() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
+            <label htmlFor="profile-bio" className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
             <textarea
+              id="profile-bio"
               name="bio"
               value={form.bio}
               onChange={handleChange}
@@ -107,8 +109,9 @@ export default function CreateProfile() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Profile photo</label>
+            <label htmlFor="profile-photo" className="block text-sm font-medium text-gray-700 mb-1">Profile photo</label>
             <input
+              id="profile-photo"
               type="file"
               accept="image/*"
               onChange={(e) => setPhotoFile(e.target.files[0])}
@@ -117,10 +120,11 @@ export default function CreateProfile() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="profile-portfolio" className="block text-sm font-medium text-gray-700 mb-1">
               Portfolio photos <span className="text-gray-400 font-normal">(optional, up to 6)</span>
             </label>
             <input
+              id="profile-portfolio"
               type="file"
               accept="image/*"
               multiple
