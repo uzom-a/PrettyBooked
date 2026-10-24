@@ -5,6 +5,11 @@ import { useAuth } from '../context/AuthContext'
 
 const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
 
+function toMinutes(time) {
+  const [h, m] = time.split(':').map(Number)
+  return h * 60 + m
+}
+
 function generateSlots(openTime, closeTime, durationMins) {
   const slots = []
   const [openH, openM] = openTime.split(':').map(Number)
@@ -17,7 +22,7 @@ function generateSlots(openTime, closeTime, durationMins) {
     const m = current % 60
     const label = `${h % 12 || 12}:${m.toString().padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`
     const value = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`
-    slots.push({ label, value })
+    slots.push({ label, value, start: current, end: current + durationMins })
     current += durationMins
   }
   return slots
@@ -32,13 +37,14 @@ export default function Book() {
   const [provider, setProvider] = useState(null)
   const [services, setServices] = useState([])
   const [availability, setAvailability] = useState([])
-  const [bookedSlots, setBookedSlots] = useState([])
+  const [takenTimes, setTakenTimes] = useState([])
 
   const [selectedService, setSelectedService] = useState(null)
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     async function load() {
@@ -55,18 +61,18 @@ export default function Book() {
     load()
   }, [providerId])
 
+  // Other students' bookings are private, so the database only shares when
+  // each taken time starts and how long it lasts.
+  async function loadTakenTimes(date) {
+    const { data } = await supabase.rpc('taken_times', { p_provider_id: providerId, p_date: date })
+    setTakenTimes((data || []).map((t) => {
+      const start = toMinutes(t.start_time)
+      return { start, end: start + t.duration_minutes }
+    }))
+  }
+
   useEffect(() => {
-    if (!selectedDate) return
-    async function loadBooked() {
-      const { data } = await supabase
-        .from('bookings')
-        .select('time')
-        .eq('provider_id', providerId)
-        .eq('date', selectedDate)
-        .in('status', ['pending', 'confirmed'])
-      setBookedSlots((data || []).map((b) => b.time.slice(0, 5)))
-    }
-    loadBooked()
+    if (selectedDate) loadTakenTimes(selectedDate)
   }, [selectedDate])
 
   const availableSlots = () => {
@@ -74,15 +80,20 @@ export default function Book() {
     const dayName = DAYS[new Date(selectedDate + 'T00:00:00').getDay()]
     const dayAvail = availability.find((a) => a.day_of_week === dayName)
     if (!dayAvail) return []
+    const now = new Date()
+    const nowMinutes = selectedDate === minDate ? now.getHours() * 60 + now.getMinutes() : -1
     const slots = generateSlots(dayAvail.open_time, dayAvail.close_time, selectedService.duration_minutes)
-    return slots.filter((s) => !bookedSlots.includes(s.value))
+    return slots.filter((s) =>
+      s.start > nowMinutes && !takenTimes.some((t) => s.start < t.end && s.end > t.start)
+    )
   }
 
-  const minDate = new Date().toISOString().split('T')[0]
+  const minDate = new Date().toLocaleDateString('en-CA')
 
   async function handleConfirm() {
     setSubmitting(true)
-    await supabase.from('bookings').insert({
+    setError('')
+    const { error: err } = await supabase.from('bookings').insert({
       student_id: user.id,
       provider_id: providerId,
       service_id: selectedService.id,
@@ -90,6 +101,12 @@ export default function Book() {
       time: selectedTime,
       status: 'pending',
     })
+    if (err) {
+      setError(err.message)
+      setSubmitting(false)
+      loadTakenTimes(selectedDate)
+      return
+    }
     navigate('/bookings')
   }
 
@@ -222,10 +239,14 @@ export default function Book() {
               </div>
             </div>
 
+            {error && (
+              <div className="bg-red-50 text-red-600 text-sm p-3 rounded-xl mb-5 border border-red-100">{error}</div>
+            )}
+
             <p className="text-xs text-gray-400 text-center mb-6">Payment is handled in person at the time of your appointment.</p>
 
             <div className="flex gap-3">
-              <button onClick={() => setStep(2)} className="flex-1 border-2 border-gray-200 text-gray-600 py-2.5 rounded-full font-semibold hover:border-gray-300 transition-colors">
+              <button onClick={() => { setStep(2); setSelectedTime(''); setError('') }} className="flex-1 border-2 border-gray-200 text-gray-600 py-2.5 rounded-full font-semibold hover:border-gray-300 transition-colors">
                 Back
               </button>
               <button
