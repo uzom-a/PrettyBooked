@@ -10,6 +10,7 @@ export default function Conversation() {
   const [messages, setMessages] = useState([])
   const [text, setText] = useState('')
   const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
   const bottomRef = useRef(null)
 
   useEffect(() => {
@@ -66,6 +67,7 @@ export default function Conversation() {
     const content = text.trim()
     if (!content) return
     setSending(true)
+    setError('')
     setText('')
     const tempId = `temp-${Date.now()}`
     setMessages((prev) => [...prev, { id: tempId, sender_id: user.id, receiver_id: otherId, content, created_at: new Date().toISOString(), is_read: false, pending: true }])
@@ -78,6 +80,12 @@ export default function Conversation() {
       if (error) return prev.filter((m) => m.id !== tempId)
       return prev.map((m) => m.id === tempId ? data : m)
     })
+    if (error) {
+      setText(content)
+      setError(error.code === '42501'
+        ? 'You can only message stylists or students you have a booking with.'
+        : 'Message not sent. Please try again.')
+    }
     setSending(false)
   }
 
@@ -113,6 +121,8 @@ export default function Conversation() {
         })}
         <div ref={bottomRef} />
       </div>
+
+      {error && <p className="text-sm text-red-500 mb-2">{error}</p>}
 
       <form onSubmit={handleSend} className="flex gap-3">
         <input
