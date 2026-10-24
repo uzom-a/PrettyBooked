@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { friendlyError } from '../lib/errors'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
@@ -30,14 +31,14 @@ export default function AdminQueue() {
   async function approve(id) {
     setError('')
     const { error: err } = await supabase.from('provider_profiles').update({ is_approved: true }).eq('id', id)
-    if (err) { setError(err.message); return }
+    if (err) { setError(friendlyError(err)); return }
     setPending((prev) => prev.filter((p) => p.id !== id))
   }
 
   async function reject(id) {
     setError('')
     const { error: err } = await supabase.from('provider_profiles').delete().eq('id', id)
-    if (err) { setError(err.message); return }
+    if (err) { setError(friendlyError(err)); return }
     setPending((prev) => prev.filter((p) => p.id !== id))
   }
 
