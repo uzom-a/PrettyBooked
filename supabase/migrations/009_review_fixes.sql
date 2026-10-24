@@ -111,6 +111,11 @@ create policy "Users can send messages" on public.messages for insert with check
   auth.uid() = sender_id and public.can_message(sender_id, receiver_id)
 );
 
+-- Supabase also lets signed-out visitors run new functions, so close that too.
+revoke execute on function public.save_availability(uuid, jsonb) from anon;
+revoke execute on function public.can_message(uuid, uuid) from anon;
+revoke execute on function public.have_booking_together(uuid, uuid) from anon;
+
 commit;
 
 -- Tell the API about the new functions straight away.
