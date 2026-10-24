@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import Layout from './components/layout/Layout'
+import RequireAuth from './components/layout/RequireAuth'
 import Landing from './pages/Landing'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -29,15 +30,15 @@ export default function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/browse/:category" element={<Browse />} />
             <Route path="/provider/:id" element={<ProviderProfile />} />
-            <Route path="/book/:providerId" element={<Book />} />
-            <Route path="/bookings" element={<MyBookings />} />
-            <Route path="/create-profile" element={<CreateProfile />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/admin" element={<AdminQueue />} />
+            <Route path="/book/:providerId" element={<RequireAuth><Book /></RequireAuth>} />
+            <Route path="/bookings" element={<RequireAuth><MyBookings /></RequireAuth>} />
+            <Route path="/create-profile" element={<RequireAuth><CreateProfile /></RequireAuth>} />
+            <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
+            <Route path="/admin" element={<RequireAuth><AdminQueue /></RequireAuth>} />
             <Route path="/check-email" element={<CheckEmail />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/messages/:otherId" element={<Conversation />} />
-            <Route path="/leave-review" element={<LeaveReview />} />
+            <Route path="/messages" element={<RequireAuth><Messages /></RequireAuth>} />
+            <Route path="/messages/:otherId" element={<RequireAuth><Conversation /></RequireAuth>} />
+            <Route path="/leave-review" element={<RequireAuth><LeaveReview /></RequireAuth>} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
           </Routes>
