@@ -12,7 +12,7 @@ export default function Landing() {
     <div>
       <section className="bg-gradient-to-br from-blush-50 via-white to-mauve-100 py-24 px-6 text-center">
         <p className="text-blush-500 font-medium tracking-widest uppercase text-sm mb-4">
-          For the ladies of Grambling State
+          For the ladies of Grambling State University
         </p>
         <h1 className="font-heading text-5xl md:text-6xl font-bold text-blush-700 mb-5 leading-tight">
           Look good. <br />
